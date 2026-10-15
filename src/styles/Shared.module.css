@@ -1,0 +1,6 @@
+.iconButton{border:0;background:transparent;color:#54656f;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.iconButton:hover{background:#e5e9ea;color:#111b21}
+.connectionDot{width:7px;height:7px;display:inline-block;border-radius:50%;background:#25d366;box-shadow:0 0 0 3px #d9fdd3;flex-shrink:0}
+.primaryButton{border:0;background:#25d366;color:#102a1b;min-height:47px;border-radius:25px;padding:0 24px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:13px}
+.primaryButton:hover{background:#1fbd59}
+.formError{background:#fff1ef;color:#b44e45;padding:10px 12px;border-radius:8px;font-size:11px;line-height:1.45;margin:-5px 0 15px}

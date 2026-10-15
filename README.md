@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Откройте `http://localhost:3000`. Для запуска собранной версии: `npm run build && npm start`.
+Откройте `http://localhost:3000`. Для проверки типов: `npm run typecheck`. Для запуска собранной версии: `npm run build && npm start`.
 
 Перед использованием авторизуйте **WhatsApp** инстанс в GREEN-API. В его настройках включите `Receive webhooks on incoming messages and files` и оставьте `webhookUrl` пустым для получения через HTTP API. Если `apiUrl` инстанса отличается от `https://api.green-api.com`, укажите его в дополнительных настройках формы входа.
 
@@ -23,3 +23,11 @@ npm run dev
 - `ReceiveNotification` и `DeleteNotification` — получение и подтверждение уведомлений.
 
 Документация: [WhatsApp SendMessage](https://green-api.com/docs/api/sending/SendMessage/), [получение уведомлений](https://green-api.com/docs/api/receiving/technology-http-api/), [CheckWhatsapp](https://green-api.com/docs/api/service/CheckWhatsapp/).
+
+## Структура проекта
+
+- `src/components/` — экран подключения, список чатов, переписка и окно нового чата; рядом с каждым компонентом расположен его CSS Module.
+- `src/hooks/useChat.ts` — состояние чатов, отправка и опрос входящих уведомлений.
+- `src/lib/` — запросы к локальному API и функции работы с чатами.
+- `src/types.ts` — общие типы клиента; `server.ts` — TypeScript прокси к GREEN-API.
+- `src/styles/Shared.module.css` и `src/App.module.css` — общие элементы и каркас приложения.

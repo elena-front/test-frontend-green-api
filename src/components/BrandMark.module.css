@@ -1,0 +1,6 @@
+.mark{position:relative;display:grid;place-items:center;width:28px;height:28px;color:inherit}
+.bubble{width:28px;height:28px;transform:rotate(-8deg)}
+.phone{width:12px;height:12px;position:absolute;left:8px;top:7px;transform:rotate(-24deg)}
+.large{width:53px;height:53px}
+.large .bubble{width:53px;height:53px}
+.large .phone{width:23px;height:23px;left:15px;top:14px}
