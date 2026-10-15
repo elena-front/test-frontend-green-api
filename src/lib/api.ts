@@ -1,7 +1,9 @@
 import type { Credentials, NotificationEnvelope } from '../types';
 
+const apiOrigin = import.meta.env.VITE_API_ORIGIN?.replace(/\/+$/, '') || '';
+
 async function request<T>(path: string, credentials: Credentials, extra: Record<string, unknown> = {}): Promise<T> {
-  const response = await fetch(`/api/${path}`, {
+  const response = await fetch(`${apiOrigin}/api/${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ...credentials, ...extra }),

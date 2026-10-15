@@ -7,6 +7,7 @@ type ApiResult = Record<string, unknown> | null;
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || '127.0.0.1';
+const pagesOrigin = 'https://elena-front.github.io';
 const production = process.env.NODE_ENV === 'production';
 const vite = production ? null : await (await import('vite')).createServer({ server: { middlewareMode: true }, appType: 'spa' });
 const dist = resolve('dist');
@@ -96,7 +97,20 @@ async function api(req: http.IncomingMessage, res: http.ServerResponse): Promise
 
 const types: Record<string, string> = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };
 const server = http.createServer(async (req, res) => {
-  if (req.url?.startsWith('/api/')) return api(req, res);
+  if (req.url?.startsWith('/api/')) {
+    res.setHeader('Vary', 'Origin');
+    if (req.headers.origin === pagesOrigin) {
+      res.setHeader('Access-Control-Allow-Origin', pagesOrigin);
+      res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    }
+    if (req.method === 'OPTIONS') {
+      res.writeHead(req.headers.origin === pagesOrigin ? 204 : 403);
+      res.end();
+      return;
+    }
+    return api(req, res);
+  }
   if (vite) return vite.middlewares(req, res);
   try {
     const pathname = decodeURIComponent(new URL(req.url || '/', 'http://localhost').pathname);
