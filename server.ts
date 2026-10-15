@@ -7,7 +7,7 @@ type ApiResult = Record<string, unknown> | null;
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || '127.0.0.1';
-const pagesOrigin = 'https://elena-front.github.io';
+const allowedOrigin = new URL(process.env.ALLOWED_ORIGIN || 'https://elena-front.github.io').origin;
 const production = process.env.NODE_ENV === 'production';
 const vite = production ? null : await (await import('vite')).createServer({ server: { middlewareMode: true }, appType: 'spa' });
 const dist = resolve('dist');
@@ -99,13 +99,13 @@ const types: Record<string, string> = { '.html': 'text/html', '.js': 'text/javas
 const server = http.createServer(async (req, res) => {
   if (req.url?.startsWith('/api/')) {
     res.setHeader('Vary', 'Origin');
-    if (req.headers.origin === pagesOrigin) {
-      res.setHeader('Access-Control-Allow-Origin', pagesOrigin);
+    if (req.headers.origin === allowedOrigin) {
+      res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
       res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     }
     if (req.method === 'OPTIONS') {
-      res.writeHead(req.headers.origin === pagesOrigin ? 204 : 403);
+      res.writeHead(req.headers.origin === allowedOrigin ? 204 : 403);
       res.end();
       return;
     }
